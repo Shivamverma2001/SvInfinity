@@ -3,7 +3,7 @@ import './Sidebar.css';
 import { assets } from '../../assets/assets';
 import { Context } from '../Context/Context';
 
-const Sidebar = ({ setShowHelp }) => { // Accept setShowHelp as a prop
+const Sidebar = ({ setShowHelp }) => {
     const [extended, setExtended] = useState(false);
     const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context);
 

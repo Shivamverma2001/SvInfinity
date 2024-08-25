@@ -5,37 +5,33 @@ import { Context } from '../Context/Context';
 
 const Main = () => {
   const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
-  let recognition; // Declare recognition variable in the component scope
+  let recognition;
 
-  // Function to start voice recognition
   const startVoiceRecognition = () => {
-    // Check if SpeechRecognition is supported
     if (!('SpeechRecognition' in window) && !('webkitSpeechRecognition' in window)) {
       alert('Sorry, your browser does not support speech recognition.');
-      return; // Exit the function if not supported
+      return;
     }
 
     recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.continuous = false; // Stop recognizing after a single utterance
-    recognition.interimResults = true; // Allow interim results
-    recognition.lang = 'en-US'; // Set language to English
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
 
-    // Variable to store the recognized text
     let finalTranscript = '';
 
-    // Event for when results are returned
     recognition.onresult = (event) => {
       let interimTranscript = '';
       for (let i = event.resultIndex; i < event.results.length; i++) {
-        const transcript = event.results[i][0].transcript; // Get the recognized text
+        const transcript = event.results[i][0].transcript;
         if (event.results[i].isFinal) {
-          finalTranscript += transcript; // Append final results
-          setInput(finalTranscript); // Update the input state with the final recognized text
+          finalTranscript += transcript;
+          setInput(finalTranscript);
         } else {
-          interimTranscript += transcript; // Concatenate interim results
+          interimTranscript += transcript;
         }
       }
-      setInput(finalTranscript + interimTranscript); // Update input with both final and interim results
+      setInput(finalTranscript + interimTranscript);
     };
 
     recognition.onerror = (event) => {
@@ -43,12 +39,25 @@ const Main = () => {
     };
 
     recognition.onend = () => {
-      // Stop the microphone and keep the last recognized text in the input field
-      setInput(finalTranscript); // Ensure the last final result is kept
-      console.log('Voice recognition stopped.'); // Optional: log when recognition stops
+      setInput(finalTranscript);
+      console.log('Voice recognition stopped.');
     };
 
-    recognition.start(); // Start the voice recognition
+    recognition.start();
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      console.log('File uploaded:', file);
+      setInput(`File: ${file.name}`);
+    }
+  };
+
+  const handleSend = () => {
+    if (input) {
+      onSent();
+    }
   };
 
   return (
@@ -105,16 +114,29 @@ const Main = () => {
 
         <div className="main-bottom">
           <div className="search-box">
-            <input onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Enter a prompt here' />
+            <input
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
+              type="text"
+              placeholder='Enter a prompt here'
+            />
             <div>
-              <img src={assets.gallery_icon} alt="" />
-              <img 
-                src={assets.mic_icon} 
-                alt="" 
-                onClick={startVoiceRecognition} // Start voice recognition on click
-                style={{ cursor: 'pointer' }} // Change cursor to pointer for better UX
+              <input
+                type="file"
+                onChange={handleFileUpload}
+                style={{ display: 'none' }}
+                id="file-upload"
               />
-              {input ? <img onClick={() => onSent()} src={assets.send_icon} alt="" /> : null}
+              <label htmlFor="file-upload">
+                <img src={assets.gallery_icon} alt="" style={{ cursor: 'pointer' }} />
+              </label>
+              <img
+                src={assets.mic_icon}
+                alt=""
+                onClick={startVoiceRecognition}
+                style={{ cursor: 'pointer' }}
+              />
+              {input ? <img onClick={handleSend} src={assets.send_icon} alt="" /> : null}
             </div>
           </div>
           <p className="bottom-info">

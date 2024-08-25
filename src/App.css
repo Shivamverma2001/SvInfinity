@@ -1,4 +1,4 @@
-.app-container { /* This class will apply flex styles to the container */
-    display: flex; /* Enable flex layout */
-    flex-grow: 1; /* Allow it to grow to fill available space */
+.app-container {
+    display: flex;
+    flex-grow: 1;
   }
