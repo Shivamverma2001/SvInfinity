@@ -1,3 +1,4 @@
+// Sidebar.js
 import React, { useContext, useState } from 'react';
 import './Sidebar.css';
 import { assets } from '../../assets/assets';
@@ -5,7 +6,7 @@ import { Context } from '../Context/Context';
 
 const Sidebar = ({ setShowHelp }) => {
     const [extended, setExtended] = useState(false);
-    const { onSent, prevPrompts, setRecentPrompt, newChat } = useContext(Context);
+    const { onSent, prevPrompts, setRecentPrompt, newChat, isDarkMode, toggleDarkMode } = useContext(Context);
 
     const loadPrompt = async (prompt) => {
         setRecentPrompt(prompt);
@@ -13,7 +14,7 @@ const Sidebar = ({ setShowHelp }) => {
     };
 
     return (
-        <div className='sidebar'>
+        <div className={`sidebar ${isDarkMode ? 'dark' : 'light'}`}>
             <div className="top">
                 <img onClick={() => setExtended(prev => !prev)} src={assets.menu_icon} alt="Menu" className="menu" />
                 <div onClick={() => newChat()} className="new-chat">
@@ -41,7 +42,7 @@ const Sidebar = ({ setShowHelp }) => {
                     <img src={assets.history_icon} alt="Activity" />
                     {extended ? <p>Activity</p> : null}
                 </div>
-                <div className="bottom-item recent-entry">
+                <div className="bottom-item recent-entry" onClick={toggleDarkMode}>
                     <img src={assets.setting_icon} alt="Settings" />
                     {extended ? <p>Settings</p> : null}
                 </div>

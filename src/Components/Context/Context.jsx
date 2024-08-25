@@ -10,17 +10,18 @@ const ContextProvider = (props) => {
   const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resultData, setResultData] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false); // Dark mode state
 
   const delayParam = (index, nextWord) => {
     setTimeout(function () {
       setResultData(prev => prev + nextWord);
     }, 75 * index);
-  }
+  };
 
   const newChat = () => {
     setLoading(false);
     setShowResult(false);
-  }
+  };
 
   const onSent = async (prompt) => {
     setResultData("");
@@ -44,7 +45,7 @@ const ContextProvider = (props) => {
         newResponse += "<b>" + responesArray[i] + "</b>";
       }
     }
-    newResponse = newResponse.split("*").join("</br>")
+    newResponse = newResponse.split("*").join("</br>");
     let newResponseArray = newResponse.split(" ");
     for (let i = 0; i < newResponseArray.length; i++) {
       const nextWord = newResponseArray[i];
@@ -52,7 +53,11 @@ const ContextProvider = (props) => {
     }
     setLoading(false);
     setInput("");
-  }
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(prevMode => !prevMode); // Toggle dark mode
+  };
 
   const contextValue = {
     prevPrompts,
@@ -65,13 +70,16 @@ const ContextProvider = (props) => {
     resultData,
     input,
     setInput,
-    newChat
+    newChat,
+    isDarkMode, // Add dark mode state to context
+    toggleDarkMode, // Add toggle function to context
   };
+
   return (
     <Context.Provider value={contextValue}>
       {props.children}
     </Context.Provider>
-  )
-}
+  );
+};
 
 export default ContextProvider;

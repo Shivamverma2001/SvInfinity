@@ -1,73 +1,98 @@
-.sidebar{
+.sidebar {
     min-height: 100vh;
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #f0f4f9;
+    background-color: #f0f4f9; /* Light mode background */
     padding: 25px 15px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition for smoothness */
 }
 
-.sidebar img{
+.sidebar.dark {
+    background-color: #1a1a1a; /* Dark mode background */
+    color: #f9f9f9; /* Dark mode text color */
+}
+
+.sidebar img {
     width: 20px;
 }
 
-.sidebar .menu{
+.sidebar .menu {
     display: block;
     margin-left: 10px;
     cursor: pointer;
 }
 
-.sidebar .new-chat{
+.sidebar.dark .menu{
+    background-color: #52515193;
+}
+
+.sidebar .new-chat {
     margin-top: 50px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
     padding: 10px 15px;
-    background-color: #e6eaf1;
+    background-color: #e6eaf1; /* Light mode button background */
     border-radius: 50px;
     font-size: 15px;
     color: gray;
     cursor: pointer;
 }
 
-.sidebar .recent{
+.sidebar.dark .new-chat {
+    background-color: #52515193; /* Dark mode button background */
+    color: #f9f9f9; /* Dark mode text color */
+}
+
+.sidebar .recent {
     display: flex;
     flex-direction: column;
     animation: fadeIn 1.5s;
 }
 
-.sidebar .recent-title{
+.sidebar .recent-title {
     margin-top: 30px;
     margin-bottom: 20px;
 }
 
-.sidebar .recent-entry{
+.sidebar .recent-entry {
     display: flex;
     align-items: start;
     gap: 10px;
     padding: 10px;
     padding-right: 40px;
     border-radius: 50px;
-    color: #282828;
+    color: #282828; /* Light mode text color */
     cursor: pointer;
 }
 
-.sidebar .recent-entry:hover{
-    background-color: #e2e6eb;
+.sidebar.dark .recent-entry {
+    color: #f9f9f9; /* Dark mode text color */
+    background-color: #52515193;
+    margin-bottom: 10px;
 }
 
-.sidebar .bottom{
+.sidebar .recent-entry:hover {
+    background-color: #e2e6eb; /* Light mode hover effect */
+}
+
+.sidebar.dark .recent-entry:hover {
+    background-color: #3a3a3a; /* Dark mode hover effect */
+}
+
+.sidebar .bottom {
     display: flex;
     flex-direction: column;
 }
 
-.sidebar .bottom-item{
+.sidebar .bottom-item {
     padding-right: 10px;
     cursor: pointer;
 }
 
-@media (max-width:600px) {
-    .sidebar{
+@media (max-width: 600px) {
+    .sidebar {
         display: none;
     }
 }

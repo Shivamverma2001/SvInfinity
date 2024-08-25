@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './Main.css';
 import { assets } from '../../assets/assets';
 import { Context } from '../Context/Context';
 
 const Main = () => {
-  const { onSent, recentPrompt, showResult, loading, resultData, setInput, input } = useContext(Context);
+  const { onSent, recentPrompt, showResult, loading, resultData, setInput, input, isDarkMode } = useContext(Context);
   let recognition;
 
   const startVoiceRecognition = () => {
@@ -60,8 +60,16 @@ const Main = () => {
     }
   };
 
+  // Handle keydown event
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent form submission if inside a form
+      handleSend();
+    }
+  };
+
   return (
-    <div className='main'>
+    <div className={`main ${isDarkMode ? 'dark' : 'light'}`}>
       <div className="nav">
         <p>SvInfinity</p>
         <div className="user-icon-container">
@@ -121,6 +129,7 @@ const Main = () => {
               value={input}
               type="text"
               placeholder='Enter a prompt here'
+              onKeyDown={handleKeyDown} // Add keydown event listener
             />
             <div>
               <input
