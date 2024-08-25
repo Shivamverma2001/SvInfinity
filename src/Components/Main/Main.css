@@ -180,6 +180,32 @@
     line-height: 1.8;
 }
 
+.user-icon-container {
+    display: inline-block;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.user-icon {
+    width: 100px; /* Increased size of the icon to 600px */
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.user-icon-container:hover .user-icon {
+    transform: scale(1.2); /* Increase size on hover (720px) */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: Add shadow on hover */
+}
+.nav p {
+    transition: transform 0.3s ease; /* Smooth transition for scaling */
+}
+
+.nav p:hover {
+    transform: scale(1.1); /* Increase size on hover */
+    color: #4b90ff; /* Optional: Change color on hover for effect */
+}
+
+
 @media (max-width: 600px) {
     .main-container {
         margin-bottom: 20px;
